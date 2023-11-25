@@ -1,4 +1,4 @@
-#cudaInLXC
+# cudaInLXC
 Nvidia Cuda in Proxmox LXC or any other LXC under Linux and more specifically Debian in this example.
 
 This guid is based on Debian Bookworm and/or Proxmomx 8
@@ -20,7 +20,7 @@ Should result in something like:
 ```
 If you get nothing you better check your bios.
 
-##Debian/Proxmox setuo
+## Debian/Proxmox setuo
 ```
 apt install -y pve-headers build-essential
 ```
@@ -36,7 +36,7 @@ echo "options nouveau modeset=0" >> /etc/modprobe.d/blacklist.conf
 update-initramfs -u
 ```
 
-##Nvidia CUDA
+## Nvidia CUDA
 ```
 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/535.129.03/NVIDIA-Linux-x86_64-535.129.03.run
 sh NVIDIA-Linux-x86_64-535.129.03.run
