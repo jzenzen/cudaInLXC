@@ -1,4 +1,4 @@
-![bild](https://github.com/jzenzen/cudaInLXC/assets/5422225/a4c1d922-0d5c-4b4f-9815-1af755685c5c)# cudaInLXC
+#cudaInLXC
 Nvidia Cuda in Proxmox LXC or any other LXC under Linux and more specifically Debian in this example.
 
 This guid is based on Debian Bookworm and/or Proxmomx 8
@@ -38,18 +38,13 @@ update-initramfs -u
 
 ##Nvidia CUDA
 ```
-wget https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/cuda-keyring_1.1-1_all.deb
-dpkg -i cuda-keyring_1.1-1_all.deb
-echo "deb [signed-by=/usr/share/keyrings/cuda-archive-keyring.gpg] https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/ /" |  tee /etc/apt/sources.list.d/cuda-debian12-x86_64.list
-add-apt-repository contrib
-apt update
-apt-get install -y nvidia-kernel-open-dkms
-apt-get install -y cuda-drivers
+wget https://us.download.nvidia.com/XFree86/Linux-x86_64/535.129.03/NVIDIA-Linux-x86_64-535.129.03.run
+sh NVIDIA-Linux-x86_64-535.129.03.run
 ```
 
 ## Now add the output of this to your LXC settings
 ```
-ls -l /dev/nv* |grep -v nvme | grep crw | sed -e 's/.*root root\s*\(.*\),.*\/dev\/\(.*\)/lxc.cgroup2.devices.allow: c \1:* rw\nlxc.mount.entry: \/dev\/\2 \2 none bind,optional,create=file/g'
+ls -l /dev/nv* |grep -v nvme | grep crw | sed -e 's/.*root root\s*\(.*\),.*\/dev\/\(.*\)/lxc.cgroup2.devices.allow: c \1:* rwm\nlxc.mount.entry: \/dev\/\2 dev\/\2 none bind,optional,create=file/g'
 ```
 Should look something like this:
 ```
@@ -68,3 +63,7 @@ lxc.mount.entry: /dev/nvram nvram none bind,optional,create=file
 ```
 
 # Inside the LXC container
+```
+wget https://us.download.nvidia.com/XFree86/Linux-x86_64/535.129.03/NVIDIA-Linux-x86_64-535.129.03.run
+sh NVIDIA-Linux-x86_64-535.129.03.run --no-kernel-module
+```
