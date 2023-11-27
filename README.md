@@ -7,6 +7,7 @@ Inspired by:
 * https://github.com/gma1n/LXC-JellyFin-GPU
 * https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Debian&target_version=12&target_type=deb_network
 * https://docs.nvidia.com/cuda/cuda-installation-guide-linux/#meta-packages
+* https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow
 
 ## Check for IOMMU
 ```
