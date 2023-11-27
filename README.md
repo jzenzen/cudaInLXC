@@ -83,6 +83,23 @@ Choose one
 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/535.129.03/NVIDIA-Linux-x86_64-535.129.03.run
 sh NVIDIA-Linux-x8a_64-535.129.03.run --no-kernel-module
 
+#############Use NVIDIA Container
+apt install curl gpg
+curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+  && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+    sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+    tee /etc/apt/sources.list.d/nvidia-container-toolkit.list \
+  && \
+    apt-get update
+
+apt-get install -y nvidia-container-toolkit
+
+nvidia-ctk runtime configure --runtime=docker
+systemctl restart docker
+
+docker run --gpus all -it --rm nvcr.io/nvidia/tensorflow:23.10-tf2-py3
+
+############Build everything
 apt install perl-modules g++
 wget https://developer.download.nvidia.com/compute/cuda/12.3.0/local_installers/cuda_12.3.0_545.23.06_linux.run
 sh cuda_12.3.0_545.23.06_linux.run --toolkit --override
