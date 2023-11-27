@@ -78,14 +78,54 @@ lxc.mount.entry: /dev/nvram nvram none bind,optional,create=file
 # Inside the LXC container
 Choose one
 
-### Nvidia
+### Build Nvidia driver & Cuda & CudNN
 ```
 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/535.129.03/NVIDIA-Linux-x86_64-535.129.03.run
-sh NVIDIA-Linux-x86_64-535.129.03.run --no-kernel-module
+sh NVIDIA-Linux-x8a_64-535.129.03.run --no-kernel-module
+
+apt install perl-modules g++
+wget https://developer.download.nvidia.com/compute/cuda/12.3.0/local_installers/cuda_12.3.0_545.23.06_linux.run
+sh cuda_12.3.0_545.23.06_linux.run --toolkit --override
+echo "/usr/local/cuda-12.3/lib64" > /etc/ld.so.conf.d/cuda-12-3.conf
+
+wget https://developer.download.nvidia.com/compute/cuda/12.2.2/local_installers/cuda_12.2.2_535.104.05_linux.run
+sh cuda_12.2.2_535.104.05_linux.run --toolkit --silent --override
+
+wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_520.61.05_linux.run
+sh cuda_11.8.0_520.61.05_linux.run --toolkit --silent --override
+
+apt-get install zlib1g
+tar -xvf cudnn-linux-*.tar.xz
+cp cudnn-*-archive/include/cudnn*.h /usr/local/cuda/include
+cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64
+chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
+
+
+```
+
+Output:
+```
+===========
+= Summary =
+===========
+
+Driver:   Not Selected
+Toolkit:  Installed in /usr/local/cuda-12.3/
+
+Please make sure that
+ -   PATH includes /usr/local/cuda-12.3/bin
+ -   LD_LIBRARY_PATH includes /usr/local/cuda-12.3/lib64, or, add /usr/local/cuda-12.3/lib64 to /etc/ld.so.conf and run ldconfig as root
+
+To uninstall the CUDA Toolkit, run cuda-uninstaller in /usr/local/cuda-12.3/bin
+***WARNING: Incomplete installation! This installation did not install the CUDA Driver. A driver of version at least 545.00 is required for CUDA 12.3 functionality to work.
+To install the driver using this installer, run the following command, replacing <CudaInstaller> with the name of this run file:
+    sudo <CudaInstaller>.run --silent --driver
+
+Logfile is /var/log/cuda-installer.log
 ```
 
 
-### CUDA
+### CUDA - probably not working...
 ```
 wget https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/cuda-keyring_1.1-1_all.deb
 dpkg -i cuda-keyring_1.1-1_all.deb
