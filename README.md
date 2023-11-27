@@ -8,6 +8,7 @@ Inspired by:
 * https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Debian&target_version=12&target_type=deb_network
 * https://docs.nvidia.com/cuda/cuda-installation-guide-linux/#meta-packages
 * https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow
+* https://github.com/NVIDIA/libnvidia-container/issues/176
 
 ## Check for IOMMU
 ```
@@ -97,9 +98,18 @@ apt-get install -y nvidia-container-toolkit
 
 nvidia-ctk runtime configure --runtime=docker
 systemctl restart docker
+sed -i -e 's/.*no-cgroups.*/no-cgroups = true/g' /etc/nvidia-container-runtime/config.toml
 
+#TEST setup
 docker run --gpus all -it --rm nvcr.io/nvidia/tensorflow:23.10-tf2-py3
 
+python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+
+```
+Now you have everything working in the docker!
+
+You can also try to build everything as done below:
+```
 ############Build everything
 apt install perl-modules g++
 wget https://developer.download.nvidia.com/compute/cuda/12.3.0/local_installers/cuda_12.3.0_545.23.06_linux.run
