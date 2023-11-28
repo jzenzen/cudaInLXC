@@ -9,6 +9,7 @@ Inspired by:
 * https://docs.nvidia.com/cuda/cuda-installation-guide-linux/#meta-packages
 * https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow
 * https://github.com/NVIDIA/libnvidia-container/issues/176
+* https://gist.github.com/MihailCosmin/affa6b1b71b43787e9228c25fe15aeba
 
 ## Check for IOMMU
 ```
