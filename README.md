@@ -41,13 +41,13 @@ update-initramfs -u
 
 ## Nvidia 
 Choose one!
-### Driver
+### Build Driver
 ```
 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/535.129.03/NVIDIA-Linux-x86_64-535.129.03.run
 sh NVIDIA-Linux-x86_64-535.129.03.run
 ```
 
-### CUDA
+#### CUDA Not fully tested
 ```
 wget https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/cuda-keyring_1.1-1_all.deb
 dpkg -i cuda-keyring_1.1-1_all.deb
@@ -100,15 +100,16 @@ apt-get install -y nvidia-container-toolkit
 nvidia-ctk runtime configure --runtime=docker
 systemctl restart docker
 sed -i -e 's/.*no-cgroups.*/no-cgroups = true/g' /etc/nvidia-container-runtime/config.toml
+```
 
-#TEST setup
+###TEST setup
+```
 docker run --gpus all -it --rm nvcr.io/nvidia/tensorflow:23.10-tf2-py3
-
 python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
-
 ```
 Now you have everything working in the docker!
 
+## Not fully tested, use on own risk
 You can also try to build everything as done below:
 ```
 ############Build everything
