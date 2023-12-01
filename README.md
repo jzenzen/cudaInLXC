@@ -102,7 +102,7 @@ systemctl restart docker
 sed -i -e 's/.*no-cgroups.*/no-cgroups = true/g' /etc/nvidia-container-runtime/config.toml
 ```
 
-###TEST setup
+### TEST setup
 ```
 docker run --gpus all -it --rm nvcr.io/nvidia/tensorflow:23.10-tf2-py3
 python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
