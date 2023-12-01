@@ -81,7 +81,7 @@ lxc.mount.entry: /dev/nvram nvram none bind,optional,create=file
 # Inside the LXC container
 Choose one
 
-### Build Nvidia driver & Cuda & CudNN
+## Build Nvidia driver & use Nvidia docker image
 ```
 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/535.129.03/NVIDIA-Linux-x86_64-535.129.03.run
 sh NVIDIA-Linux-x8a_64-535.129.03.run --no-kernel-module
@@ -109,7 +109,7 @@ python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'
 ```
 Now you have everything working in the docker!
 
-## Not fully tested, use on own risk
+## Not fully tested, use on own risk - Build Nvidia driver & Cuda & CudNN
 You can also try to build everything as done below:
 ```
 ############Build everything
