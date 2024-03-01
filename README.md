@@ -1,7 +1,7 @@
 # cudaInLXC
 Nvidia Cuda in Proxmox LXC or any other LXC under Linux and more specifically Debian in this example.
 
-This guid is based on Debian Bookworm and/or Proxmomx 8
+This guide is based on Debian Bookworm and/or Proxmomx 8
 
 Inspired by: 
 * https://github.com/gma1n/LXC-JellyFin-GPU
@@ -84,7 +84,7 @@ Choose one
 ## Build Nvidia driver & use Nvidia docker image
 ```
 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/535.129.03/NVIDIA-Linux-x86_64-535.129.03.run
-sh NVIDIA-Linux-x8a_64-535.129.03.run --no-kernel-module
+sh NVIDIA-Linux-x86_64-535.129.03.run --no-kernel-module
 
 #############Use NVIDIA Container
 apt install curl gpg
