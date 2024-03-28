@@ -15,7 +15,7 @@ Should result in something like:
 ```
 If you get nothing you better check your bios.
 
-## Debian/Proxmox setuo
+## Debian/Proxmox setup
 ```
 apt install -y pve-headers build-essential
 ```
