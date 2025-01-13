@@ -40,22 +40,11 @@ update-initramfs -u
 ```
 
 ## Nvidia 
-Choose one!
 ### Build Driver
 ```
-wget https://us.download.nvidia.com/XFree86/Linux-x86_64/535.129.03/NVIDIA-Linux-x86_64-535.129.03.run
-sh NVIDIA-Linux-x86_64-535.129.03.run
-```
-
-#### CUDA Not fully tested
-```
-wget https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/cuda-keyring_1.1-1_all.deb
-dpkg -i cuda-keyring_1.1-1_all.deb
-echo "deb [signed-by=/usr/share/keyrings/cuda-archive-keyring.gpg] https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/ /" |  tee /etc/apt/sources.list.d/cuda-debian12-x86_64.list
-add-apt-repository contrib
-apt update
-apt-get install -y nvidia-kernel-open-dkms
-apt-get install -y cuda-drivers
+#wget https://us.download.nvidia.com/XFree86/Linux-x86_64/535.129.03/NVIDIA-Linux-x86_64-535.129.03.run
+wget https://us.download.nvidia.com/XFree86/Linux-x86_64/550.142/NVIDIA-Linux-x86_64-550.142.run
+sh NVIDIA-Linux-x86_64-550.142.run
 ```
 
 ## Now add the output of this to your LXC settings
