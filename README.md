@@ -45,7 +45,7 @@ update-initramfs -u
 ### download and install Driver
 ```
 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/550.144.03/NVIDIA-Linux-x86_64-550.144.03.run
-sh NVIDIA-Linux-x86_64-550.144.03.run
+sh NVIDIA-Linux-x86_64-550.144.03.run --dkms
 ```
 The installer has a few prompts. Skip secondary cards, No 32 bits, No X 
 
