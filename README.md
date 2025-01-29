@@ -12,6 +12,7 @@ Inspired by:
 * https://github.com/NVIDIA/libnvidia-container/issues/176
 * https://gist.github.com/MihailCosmin/affa6b1b71b43787e9228c25fe15aeba
 * https://sluijsjes.nl/2024/05/18/coral-and-nvidia-passthrough-for-proxmox-lxc-to-install-frigate-video-surveillance-server/
+* https://stackoverflow.com/questions/8223811/a-top-like-utility-for-monitoring-cuda-activity-on-a-gpu
 
 ## Check for IOMMU *I haven't hard to do this as so far all systems I've done this on already had IOMMU setup/working!
 ```
@@ -99,3 +100,14 @@ docker run --gpus all -it --rm nvcr.io/nvidia/tensorflow:23.10-tf2-py3
 python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
 ```
 Now you have everything working in the docker!
+
+### testing the driver itself (not inside docker) to confirm it's working
+This will loop and call the view at every second.
+```
+nvidia-smi -l 1
+```
+If you do not want to keep past traces of the looped call in the console history, you can also do:
+```
+watch -n0.1 nvidia-smi
+```
+Where 0.1 is the time interval, in seconds.
