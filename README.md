@@ -1,4 +1,4 @@
-# cudaInLXC
+# NvidiaGPU in Proxmox Host then unpriviledged LXC and finally available to docker
 Nvidia in Proxmox LXC or any other LXC under Linux and more specifically Debian in this example.
 
 This guide is based on Debian Bookworm and/or Proxmomx 8
