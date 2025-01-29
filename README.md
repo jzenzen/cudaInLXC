@@ -2,6 +2,7 @@
 Nvidia in Proxmox LXC or any other LXC under Linux and more specifically Debian in this example.
 
 This guide is based on Debian Bookworm and/or Proxmomx 8
+I'm not the original person to build this guide, you can easily look up where it's forked from!
 
 Inspired by: 
 * https://github.com/gma1n/LXC-JellyFin-GPU
@@ -10,8 +11,9 @@ Inspired by:
 * https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow
 * https://github.com/NVIDIA/libnvidia-container/issues/176
 * https://gist.github.com/MihailCosmin/affa6b1b71b43787e9228c25fe15aeba
+* https://sluijsjes.nl/2024/05/18/coral-and-nvidia-passthrough-for-proxmox-lxc-to-install-frigate-video-surveillance-server/
 
-## Check for IOMMU
+## Check for IOMMU *I haven't hard to do this as so far all systems I've done this on already had IOMMU setup/working!
 ```
 dmesg | grep IOMMU
 ```
@@ -23,13 +25,13 @@ Should result in something like:
 ```
 If you get nothing you better check your bios.
 
-## Debian/Proxmox setuo
+## Debian/Proxmox setup
 ```
-apt install -y pve-headers build-essential
+apt install -y pve-headers-$(uname -r) build-essential libvulkan1
 ```
 or if you are on Debian and not in Proxmox
 ```
-apt install -y linux-headers build-essential
+sudo apt install -y linux-headers-$(uname -r) build-essential libvulkan1
 ```
 
 Blacklist nouveau
@@ -40,12 +42,12 @@ update-initramfs -u
 ```
 
 ## Nvidia 
-### Build Driver
+### download and install Driver
 ```
-#wget https://us.download.nvidia.com/XFree86/Linux-x86_64/535.129.03/NVIDIA-Linux-x86_64-535.129.03.run
-wget https://us.download.nvidia.com/XFree86/Linux-x86_64/550.142/NVIDIA-Linux-x86_64-550.142.run
-sh NVIDIA-Linux-x86_64-550.142.run
+wget https://us.download.nvidia.com/XFree86/Linux-x86_64/550.144.03/NVIDIA-Linux-x86_64-550.144.03.run
+sh NVIDIA-Linux-x86_64-550.144.03.run
 ```
+The installer has a few prompts. Skip secondary cards, No 32 bits, No X 
 
 ## Now add the output of this to your LXC settings
 ```
@@ -68,14 +70,14 @@ lxc.mount.entry: /dev/nvram nvram none bind,optional,create=file
 ```
 
 # Inside the LXC container
-Choose one
 
 ## Build Nvidia driver & use Nvidia docker image
 ```
-wget https://us.download.nvidia.com/XFree86/Linux-x86_64/535.129.03/NVIDIA-Linux-x86_64-535.129.03.run
-sh NVIDIA-Linux-x86_64-535.129.03.run --no-kernel-module
+wget https://us.download.nvidia.com/XFree86/Linux-x86_64/550.144.03/NVIDIA-Linux-x86_64-550.144.03.run
+sh NVIDIA-Linux-x86_64-550.144.03.run --no-kernel-module
+#The installer has a few prompts. Skip secondary cards, No 32 bits, No X 
 
-#############Use NVIDIA Container
+#############Install NVIDIA Container Toolkit
 apt install curl gpg
 curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
   && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
