@@ -15,7 +15,7 @@ Inspired by:
 * https://stackoverflow.com/questions/8223811/a-top-like-utility-for-monitoring-cuda-activity-on-a-gpu
 * https://forum.proxmox.com/threads/nvidia-drivers-instalation-proxmox-and-ct.156421/
 
-## Check for IOMMU *I haven't hard to do this as so far all systems I've done this on already had IOMMU setup/working!
+## Check for IOMMU
 ```
 dmesg | grep IOMMU
 ```
