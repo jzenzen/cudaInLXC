@@ -73,7 +73,7 @@ lxc.mount.entry: /dev/nvram nvram none bind,optional,create=file
 
 # Inside the LXC container
 
-## Build Nvidia driver & use Nvidia docker image
+## Build Nvidia driver & install Nvidia container toolkit
 ```
 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/550.144.03/NVIDIA-Linux-x86_64-550.144.03.run
 sh NVIDIA-Linux-x86_64-550.144.03.run --no-kernel-module
