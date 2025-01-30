@@ -44,7 +44,7 @@ update-initramfs -u
 ```
 
 ## Nvidia 
-### download and install Driver (I recommend checking for latest rather than blindly using below)
+### download and install Driver (Check for latest rather than blindly using below)
 - Find version you want here: https://www.nvidia.com/en-us/drivers/unix/
 ```
 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/550.144.03/NVIDIA-Linux-x86_64-550.144.03.run
@@ -56,7 +56,7 @@ The installer has a few prompts. Skip secondary cards, No 32 bits, No X
 ```
 ls -l /dev/nv* |grep -v nvme | grep crw | sed -e 's/.*root root\s*\(.*\),.*\/dev\/\(.*\)/lxc.cgroup2.devices.allow: c \1:* rwm\nlxc.mount.entry: \/dev\/\2 dev\/\2 none bind,optional,create=file/g'
 ```
-Should look something like this:
+Should look something like this(Do not blindly copy the below):
 ```
 lxc.cgroup2.devices.allow: c 195:* rw
 lxc.mount.entry: /dev/nvidia0 nvidia0 none bind,optional,create=file
