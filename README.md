@@ -13,6 +13,7 @@ Inspired by:
 * https://gist.github.com/MihailCosmin/affa6b1b71b43787e9228c25fe15aeba
 * https://sluijsjes.nl/2024/05/18/coral-and-nvidia-passthrough-for-proxmox-lxc-to-install-frigate-video-surveillance-server/
 * https://stackoverflow.com/questions/8223811/a-top-like-utility-for-monitoring-cuda-activity-on-a-gpu
+* https://forum.proxmox.com/threads/nvidia-drivers-instalation-proxmox-and-ct.156421/
 
 ## Check for IOMMU *I haven't hard to do this as so far all systems I've done this on already had IOMMU setup/working!
 ```
@@ -70,7 +71,12 @@ lxc.mount.entry: /dev/nvidia-uvm-tools nvidia-uvm-tools none bind,optional,creat
 lxc.cgroup2.devices.allow: c 10:* rw
 lxc.mount.entry: /dev/nvram nvram none bind,optional,create=file
 ```
-
+## [optional, and only on HOST] Turn on persistane mode:
+https://docs.nvidia.com/deploy/driver-persistence/index.html
+```
+nvidia-smi --persistence-mode=1 #only for current session
+nvidia-persistenced
+```
 # Inside the LXC container
 
 ## Build Nvidia driver & install Nvidia container toolkit
