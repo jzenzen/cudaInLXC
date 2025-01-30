@@ -26,7 +26,7 @@ Should result in something like:
 ```
 If you get nothing you better check your bios.
 
-## Debian/Proxmox setup
+## HOST Debian/Proxmox setup
 ```
 apt install -y pve-headers-$(uname -r) build-essential libvulkan1
 ```
@@ -43,14 +43,15 @@ update-initramfs -u
 ```
 
 ## Nvidia 
-### download and install Driver
+### download and install Driver (I recommend checking for latest rather than blindly using below)
+- Find version you want here: https://www.nvidia.com/en-us/drivers/unix/
 ```
 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/550.144.03/NVIDIA-Linux-x86_64-550.144.03.run
 sh NVIDIA-Linux-x86_64-550.144.03.run --dkms
 ```
 The installer has a few prompts. Skip secondary cards, No 32 bits, No X 
 
-## Now add the output of this to your LXC settings
+## Add the output of this command to your LXC config file (/etc/pve/nodes/pve/lxc/xxx.conf)
 ```
 ls -l /dev/nv* |grep -v nvme | grep crw | sed -e 's/.*root root\s*\(.*\),.*\/dev\/\(.*\)/lxc.cgroup2.devices.allow: c \1:* rwm\nlxc.mount.entry: \/dev\/\2 dev\/\2 none bind,optional,create=file/g'
 ```
