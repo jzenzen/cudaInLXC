@@ -53,11 +53,14 @@ sh NVIDIA-Linux-x86_64-550.144.03.run --dkms
 ```
 The installer has a few prompts. Skip secondary cards, No 32 bits, No X 
 
-## [optional, and only on HOST] Turn on persistane mode:
+## [optional, and only on HOST] Turn on persistence mode:
 https://docs.nvidia.com/deploy/driver-persistence/index.html
 ```
-nvidia-smi --persistence-mode=1 #only for current session
-nvidia-persistenced
+#only for current session
+nvidia-smi --persistence-mode=1
+
+#maintaint persistence mode
+nvidia-persistenced 
 ```
 
 ## Test the driver is working (you only need to do one of the below tests)
