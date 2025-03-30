@@ -148,3 +148,9 @@ All the tests provided should give an output simular to:
 |  No running processes found                                                             |
 +-----------------------------------------------------------------------------------------+
 ```
+
+If you need to uninstall a version use the command (not the .run application downloaded for install)
+This is also used if you wish to upgrade the driver. Uninstall old on Host AND all LXC's. Then follow directions above to reinstall latest wanted version. 
+```
+nvidia-installer --uninstall 
+```
