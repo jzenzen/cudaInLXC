@@ -59,7 +59,7 @@ https://docs.nvidia.com/deploy/driver-persistence/index.html
 #only for current session
 nvidia-smi --persistence-mode=1
 
-#maintaint persistence mode
+#Perminant persistence mode
 nvidia-persistenced 
 ```
 
