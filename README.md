@@ -48,8 +48,8 @@ update-initramfs -u
 ### download and install Driver (Check for latest rather than blindly using below)
 - Find version you want here: https://www.nvidia.com/en-us/drivers/unix/
 ```
-wget https://us.download.nvidia.com/XFree86/Linux-x86_64/550.144.03/NVIDIA-Linux-x86_64-550.144.03.run
-sh NVIDIA-Linux-x86_64-550.144.03.run --dkms
+wget https://us.download.nvidia.com/XFree86/Linux-x86_64/570.133.07/NVIDIA-Linux-x86_64-570.133.07.run
+sh NVIDIA-Linux-x86_64-570.133.07.run --dkms
 ```
 The installer has a few prompts. Skip secondary cards, No 32 bits, No X 
 
@@ -99,8 +99,8 @@ lxc.mount.entry: /dev/nvram nvram none bind,optional,create=file
 
 ## Build Nvidia driver & install Nvidia container toolkit
 ```
-wget https://us.download.nvidia.com/XFree86/Linux-x86_64/550.144.03/NVIDIA-Linux-x86_64-550.144.03.run
-sh NVIDIA-Linux-x86_64-550.144.03.run --no-kernel-module
+wget https://us.download.nvidia.com/XFree86/Linux-x86_64/570.133.07/NVIDIA-Linux-x86_64-570.133.07.run
+sh NVIDIA-Linux-x86_64-570.133.07.run --no-kernel-module
 #The installer has a few prompts. Skip secondary cards, No 32 bits, No X 
 
 #############Install NVIDIA Container Toolkit
