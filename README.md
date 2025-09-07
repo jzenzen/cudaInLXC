@@ -30,11 +30,11 @@ If you get nothing you better check your bios.
 
 ## HOST Debian/Proxmox setup
 ```
-apt install -y pve-headers-$(uname -r) build-essential libvulkan1
+apt install -y dkms pve-headers-$(uname -r) build-essential libvulkan1
 ```
 or if you are on Debian and not in Proxmox
 ```
-sudo apt install -y linux-headers-$(uname -r) build-essential libvulkan1
+sudo apt install -y dkms linux-headers-$(uname -r) build-essential libvulkan1
 ```
 
 Blacklist nouveau
@@ -48,16 +48,19 @@ update-initramfs -u
 ### download and install Driver (Check for latest rather than blindly using below)
 - Find version you want here: https://www.nvidia.com/en-us/drivers/unix/
 ```
-wget https://us.download.nvidia.com/XFree86/Linux-x86_64/550.144.03/NVIDIA-Linux-x86_64-550.144.03.run
-sh NVIDIA-Linux-x86_64-550.144.03.run --dkms
+wget https://us.download.nvidia.com/XFree86/Linux-x86_64/570.172.08/NVIDIA-Linux-x86_64-570.172.08.run
+sh NVIDIA-Linux-x86_64-570.172.08.run --dkms
 ```
-The installer has a few prompts. Skip secondary cards, No 32 bits, No X 
+The installer has a few prompts. Skip secondary cards, No 32 bits, No X. Near end will ask about register kernel module sources with dkms - YES. 
 
-## [optional, and only on HOST] Turn on persistane mode:
+## [optional, and only on HOST] Turn on persistence mode:
 https://docs.nvidia.com/deploy/driver-persistence/index.html
 ```
-nvidia-smi --persistence-mode=1 #only for current session
-nvidia-persistenced
+#only for current session
+nvidia-smi --persistence-mode=1
+
+#Perminant persistence mode
+nvidia-persistenced 
 ```
 
 ## Test the driver is working (you only need to do one of the below tests)
@@ -96,8 +99,8 @@ lxc.mount.entry: /dev/nvram nvram none bind,optional,create=file
 
 ## Build Nvidia driver & install Nvidia container toolkit
 ```
-wget https://us.download.nvidia.com/XFree86/Linux-x86_64/550.144.03/NVIDIA-Linux-x86_64-550.144.03.run
-sh NVIDIA-Linux-x86_64-550.144.03.run --no-kernel-module
+wget https://us.download.nvidia.com/XFree86/Linux-x86_64/570.172.08/NVIDIA-Linux-x86_64-570.172.08.run
+sh NVIDIA-Linux-x86_64-570.172.08.run --no-kernel-module
 #The installer has a few prompts. Skip secondary cards, No 32 bits, No X 
 
 #############Install NVIDIA Container Toolkit
@@ -144,4 +147,10 @@ All the tests provided should give an output simular to:
 |=========================================================================================|
 |  No running processes found                                                             |
 +-----------------------------------------------------------------------------------------+
+```
+
+If you need to uninstall a version use the command (not the .run application downloaded for install)
+This is also used if you wish to upgrade the driver. Uninstall old on Host AND all LXC's. Then follow directions above to reinstall latest wanted version. 
+```
+nvidia-installer --uninstall 
 ```
