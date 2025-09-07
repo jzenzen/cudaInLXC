@@ -30,11 +30,11 @@ If you get nothing you better check your bios.
 
 ## HOST Debian/Proxmox setup
 ```
-apt install -y pve-headers-$(uname -r) build-essential libvulkan1
+apt install -y dkms pve-headers-$(uname -r) build-essential libvulkan1
 ```
 or if you are on Debian and not in Proxmox
 ```
-sudo apt install -y linux-headers-$(uname -r) build-essential libvulkan1
+sudo apt install -y dkms linux-headers-$(uname -r) build-essential libvulkan1
 ```
 
 Blacklist nouveau
@@ -51,7 +51,7 @@ update-initramfs -u
 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/570.172.08/NVIDIA-Linux-x86_64-570.172.08.run
 sh NVIDIA-Linux-x86_64-570.172.08.run --dkms
 ```
-The installer has a few prompts. Skip secondary cards, No 32 bits, No X 
+The installer has a few prompts. Skip secondary cards, No 32 bits, No X. Near end will ask about register kernel module sources with dkms - YES. 
 
 ## [optional, and only on HOST] Turn on persistence mode:
 https://docs.nvidia.com/deploy/driver-persistence/index.html
