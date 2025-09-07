@@ -30,11 +30,13 @@ If you get nothing you better check your bios.
 
 ## HOST Debian/Proxmox setup
 ```
-apt install -y dkms pve-headers-$(uname -r) build-essential libvulkan1
+apt install -y dkms pve-headers build-essential libvulkan1
+#Can use pve-headers-$(uname -r) instead of just pve-headers if you require specific kernel version matching - For most this won't matter
 ```
 or if you are on Debian and not in Proxmox
 ```
-sudo apt install -y dkms linux-headers-$(uname -r) build-essential libvulkan1
+sudo apt install -y dkms linux-headers build-essential libvulkan1
+#Can use pve-headers-$(uname -r) instead of just pve-headers if you require specific kernel version matching - For most this won't matter
 ```
 
 Blacklist nouveau
@@ -53,15 +55,40 @@ sh NVIDIA-Linux-x86_64-570.172.08.run --dkms
 ```
 The installer has a few prompts. Skip secondary cards, No 32 bits, No X. Near end will ask about register kernel module sources with dkms - YES. 
 
-## [optional, and only on HOST] Turn on persistence mode:
+## [optional, and only on HOST] Persistent Mode (Across Reboots):
 https://docs.nvidia.com/deploy/driver-persistence/index.html
-```
-#only for current session
-nvidia-smi --persistence-mode=1
+Ensures your GPU remains initialized and responsive across reboots—**critical for Proxmox, LXC, and Docker GPU workflows**.
 
-#Perminant persistence mode
-nvidia-persistenced 
+**Enable NVIDIA Persistence Daemon as a systemd service:**
+
+1. **Create or overwrite `/etc/systemd/system/nvidia-persistenced.service` with:**
+
 ```
+[Unit]
+Description=NVIDIA Persistence Daemon
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/nvidia-persistenced --user root
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+2. **Register, enable, and start the service:**
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now nvidia-persistenced
+sudo systemctl status nvidia-persistenced
+```
+
+3. **Result:** Persistence mode will now survive *all* reboots automatically.
+
+> **Note:** No need for manual `nvidia-smi --persistence-mode=1`.
+> Use `systemctl` to manage or check the daemon.
 
 ## Test the driver is working (you only need to do one of the below tests)
 ### You can do this same test inside the LXC to confirm the driver install is good there too!
